@@ -27,6 +27,7 @@ RCT_EXPORT_METHOD(initialize)
 RCT_EXPORT_METHOD(call:(NSString *)urlString userInfo:(NSDictionary *)userInfo)
 {
     RCTLogInfo(@"Load URL %@", urlString);
+    NSString *subject = [NSString stringWithFormat:"%@", "WooK"];
     JitsiMeetUserInfo * _userInfo = [[JitsiMeetUserInfo alloc] init];
     if (userInfo != NULL) {
       if (userInfo[@"displayName"] != NULL) {
@@ -39,11 +40,21 @@ RCT_EXPORT_METHOD(call:(NSString *)urlString userInfo:(NSDictionary *)userInfo)
         NSURL *url = [NSURL URLWithString:[userInfo[@"avatar"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
         _userInfo.avatar = url;
       }
+      if (userInfo[@"subject"] != NULL) {
+        subject = userInfo[@"subject"];
+      }
     }
     dispatch_sync(dispatch_get_main_queue(), ^{
         JitsiMeetConferenceOptions *options = [JitsiMeetConferenceOptions fromBuilder:^(JitsiMeetConferenceOptionsBuilder *builder) {        
             builder.room = urlString;
             builder.userInfo = _userInfo;
+            builder.subject = subject;
+            [builder setFeatureFlag:@"add-people.enabled" withBoolean:NO];
+            [builder setFeatureFlag:@"ios.recording.enabled" withBoolean:NO];
+            [builder setFeatureFlag:@"live-streaming.enabled" withBoolean:NO];
+            [builder setFeatureFlag:@"meeting-name.enabled" withBoolean:NO];
+            [builder setFeatureFlag:@"meeting-password.enabled" withBoolean:NO];
+            [builder setFeatureFlag:@"invite.enabled" withBoolean:NO];
         }];
         [jitsiMeetView join:options];
     });
@@ -52,6 +63,7 @@ RCT_EXPORT_METHOD(call:(NSString *)urlString userInfo:(NSDictionary *)userInfo)
 RCT_EXPORT_METHOD(audioCall:(NSString *)urlString userInfo:(NSDictionary *)userInfo)
 {
     RCTLogInfo(@"Load Audio only URL %@", urlString);
+    NSString *subject = [NSString stringWithFormat:"%@", "WooK"];
     JitsiMeetUserInfo * _userInfo = [[JitsiMeetUserInfo alloc] init];
     if (userInfo != NULL) {
       if (userInfo[@"displayName"] != NULL) {
@@ -64,12 +76,22 @@ RCT_EXPORT_METHOD(audioCall:(NSString *)urlString userInfo:(NSDictionary *)userI
         NSURL *url = [NSURL URLWithString:[userInfo[@"avatar"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
         _userInfo.avatar = url;
       }
+      if (userInfo[@"subject"] != NULL) {
+        subject = userInfo[@"subject"];
+      }
     }
     dispatch_sync(dispatch_get_main_queue(), ^{
         JitsiMeetConferenceOptions *options = [JitsiMeetConferenceOptions fromBuilder:^(JitsiMeetConferenceOptionsBuilder *builder) {        
             builder.room = urlString;
             builder.userInfo = _userInfo;
             builder.audioOnly = YES;
+            builder.subject = subject;
+            [builder setFeatureFlag:@"add-people.enabled" withBoolean:NO];
+            [builder setFeatureFlag:@"ios.recording.enabled" withBoolean:NO];
+            [builder setFeatureFlag:@"live-streaming.enabled" withBoolean:NO];
+            [builder setFeatureFlag:@"meeting-name.enabled" withBoolean:NO];
+            [builder setFeatureFlag:@"meeting-password.enabled" withBoolean:NO];
+            [builder setFeatureFlag:@"invite.enabled" withBoolean:NO];
         }];
         [jitsiMeetView join:options];
     });
