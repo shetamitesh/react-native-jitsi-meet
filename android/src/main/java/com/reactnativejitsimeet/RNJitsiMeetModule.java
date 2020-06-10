@@ -37,6 +37,7 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
+                    String subject = "WooK";
                     RNJitsiMeetUserInfo _userInfo = new RNJitsiMeetUserInfo();
                     if (userInfo != null) {
                         if (userInfo.hasKey("displayName")) {
@@ -52,12 +53,21 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
                             } catch (MalformedURLException e) {
                             }
                           }
+                          if (userInfo.hasKey("subject")) {
+                            subject = userInfo.getString("subject");
+                          }
                     }
                     RNJitsiMeetConferenceOptions options = new RNJitsiMeetConferenceOptions.Builder()
                             .setRoom(url)
                             .setAudioOnly(false)
                             .setUserInfo(_userInfo)
-                            .setSubject("MyTest")
+                            .setSubject(subject)
+                            .setFeatureFlag("add-people.enabled", false)
+                            .setFeatureFlag("live-streaming.enabled", false)
+                            .setFeatureFlag("meeting-name.enabled", false)
+                            .setFeatureFlag("meeting-password.enabled", false)
+                            .setFeatureFlag("recording.enabled", false)
+                            .setFeatureFlag("invite.enabled", false)
                             .build();
                     mJitsiMeetViewReference.getJitsiMeetView().join(options);
                 }
@@ -71,6 +81,7 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
+                    String subject = "WooK";
                     RNJitsiMeetUserInfo _userInfo = new RNJitsiMeetUserInfo();
                     if (userInfo != null) {
                         if (userInfo.hasKey("displayName")) {
@@ -86,11 +97,21 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
                             } catch (MalformedURLException e) {
                             }
                           }
+                          if (userInfo.hasKey("subject")) {
+                            subject = userInfo.getString("subject");
+                          }
                     }
                     RNJitsiMeetConferenceOptions options = new RNJitsiMeetConferenceOptions.Builder()
                             .setRoom(url)
                             .setAudioOnly(true)
                             .setUserInfo(_userInfo)
+                            .setSubject(subject)
+                            .setFeatureFlag("add-people.enabled", false)
+                            .setFeatureFlag("live-streaming.enabled", false)
+                            .setFeatureFlag("meeting-name.enabled", false)
+                            .setFeatureFlag("meeting-password.enabled", false)
+                            .setFeatureFlag("recording.enabled", false)
+                            .setFeatureFlag("invite.enabled", false)
                             .build();
                     mJitsiMeetViewReference.getJitsiMeetView().join(options);
                 }
