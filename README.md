@@ -240,6 +240,7 @@ This will run a script everytime you build to clean the unwanted architecture
 
 ```
 project.ext.react = [
+    enableHermes: true,
     entryFile: "index.js",
     bundleAssetName: "app.bundle",
 ]
@@ -364,5 +365,6 @@ If your app already includes `react-native-locale-detector` or `react-native-vec
     implementation(project(':react-native-jitsi-meet')) {
       exclude group: 'com.facebook.react',module:'react-native-locale-detector'
       exclude group: 'com.facebook.react',module:'react-native-vector-icons'
+      exclude group: 'com.facebook',module:'hermes'
     }
 ```
