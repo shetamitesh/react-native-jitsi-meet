@@ -59,7 +59,7 @@ class RNOngoingConferenceTracker {
                 }
                 break;
 
-            case 
+             
         }
     }
 

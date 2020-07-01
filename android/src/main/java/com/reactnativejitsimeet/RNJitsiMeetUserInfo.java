@@ -25,6 +25,8 @@ public class RNJitsiMeetUserInfo {
      */
     private URL avatar;
 
+    private String subject;
+
     public RNJitsiMeetUserInfo() {}
 
     public RNJitsiMeetUserInfo(Bundle b) {
@@ -44,6 +46,10 @@ public class RNJitsiMeetUserInfo {
                 avatar = new URL(avatarURL);
             } catch (MalformedURLException e) {
             }
+        }
+
+        if (b.containsKey("subject")) {
+            subject = b.getString("subject");
         }
     }
 
@@ -71,6 +77,14 @@ public class RNJitsiMeetUserInfo {
         this.avatar = avatar;
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
     Bundle asBundle() {
         Bundle b = new Bundle();
 
@@ -84,6 +98,10 @@ public class RNJitsiMeetUserInfo {
 
         if (avatar != null) {
             b.putString("avatarURL", avatar.toString());
+        }
+
+        if (subject != null) {
+            b.putString("subject", subject);
         }
 
         return b;
